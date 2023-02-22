@@ -1,33 +1,47 @@
-import React, { useState } from "react";
-import "../styles/App.css";
+import React, { useState } from 'react'
+import '../styles/App.css';
 const App = () => {
-  const [shapes, setShapes] = useState([]);
-  const [selected, setSelected] = useState("square");
+const[counter, setCounter] = useState(0);
+const[state, setState] = useState('square');
+const[result, setResult] = useState([]);
 
-  const handleAddShape = () => {
-    const oldShapes = [...shapes];
-    oldShapes.push(selected.toLowerCase());
-    setShapes(oldShapes);
-    console.log(shapes);
-  };
+
+const handleShapes = (e) => {
+  setState(e.target.value);
+}
+
+const handleSubmit = () => {
+
+    setCounter(counter + 1);
+
+    return(
+    state === 'circle' ? 
+    <div className='circle'>{counter}</div>
+     :
+     <div className='square'>{counter}</div>
+    )
+    
+}
+
+const handleClick = () => {
+  setResult([...result,handleSubmit()]);
+}
 
   return (
     <div id="main">
-      <div id="shape-creator"></div>
-      <select onChange={(e) => setSelected(e.target.value)} value={selected}>
-        <option id="option-square">Square</option>
-        <option id="option-circle">Circle</option>
-      </select>
-      <button onClick={handleAddShape}>Add Shape</button>
+      <div id="shape-creator">
+        <select id='shape' value={state} onChange={handleShapes}>
+          <option value="square">Square</option>
+          <option value="circle">Circle</option>
+        </select>
+      <button id='btn' onClick={handleClick}>Add Shape</button>
+      </div>
       <div id="shapes-holder">
-        {shapes.map((eachShape, index) => (
-          <div className={eachShape} key={index}>
-            {index}
-          </div>
-        ))}
+      {result.map((element) => element)}        
       </div>
     </div>
-  );
-};
+  )
+}
+
 
 export default App;
